@@ -7,7 +7,7 @@ output:
 
 
 ## Loading and preprocessing the data
-Since the data *activity.csv* is compressed inside *activity.zip*, we have to unzip it using the R function **unz** then read the data file normally.
+Since the data *activity.csv* is inside *activity.zip*, we have to unzip it using the R function **unz** then read the data file normally.
 
 
 ```r
@@ -39,7 +39,7 @@ Much better!
 ## What is mean total number of steps taken per day?
 In this part of the assignment we'll ignore missing values.
 
-1. Now we'll calculate the number of steps taken per day using the R function **tapply** by grouping the rows per date.
+1. Now, we'll calculate the number of steps taken per day using the R function **tapply** by grouping the rows per date.
 
 ```r
 sums <- with(df, tapply(steps, date, sum, na.rm = TRUE))
@@ -55,7 +55,7 @@ sums[1:5]
 
 ```r
 library(ggplot2)
-qplot(sums, bins = 15, col = I("black"), fill = I("gray"), xlab = "Steps per Day", ylab = "Frequency")
+qplot(sums, bins = 15, col = I("black"), fill = I("gray"), xlab = "Number of steps", ylab = "Frequency")
 ```
 
 <img src="PA1_template_files/figure-html/histogram1-1.png" style="display: block; margin: auto;" />
@@ -95,9 +95,9 @@ The maximum number of steps is ``206``, which, on average, happens in the ``835`
 
 
 ## Imputing missing values
-As we saw earlier, the missing data introduced some bias. We'll now find it out it's effect by trying to most accurately impute the missing values.
+As we saw earlier, the missing data introduced some bias. We'll now find out its effect by trying to most accurately impute the missing values.
 
-1. Let's first find the number of missing values
+1. First, find the number of missing values
 
 ```r
 missingSteps <- is.na(df$steps)
@@ -148,16 +148,16 @@ head(new_df)
 new_sums <- with(new_df, tapply(steps, date, sum))
 new_totStepsMean <- mean(new_sums)
 new_totStepsMedian <- median(new_sums)
-qplot(new_sums, bins = 15, col = I("black"), fill = I("gray"), xlab = "Steps per Day", ylab = "Frequency")
+qplot(new_sums, bins = 15, col = I("black"), fill = I("gray"), xlab = "Number of steps", ylab = "Frequency")
 ```
 
 <img src="PA1_template_files/figure-html/histogram2-1.png" style="display: block; margin: auto;" />
-Looks like most of the zero values are now distributed to the rest of the histogram, especially in the 10K-12K region.
+Looks like most of the zero values are now distributed to the rest of the histogram, especially to the 10K-12K region.
 
-The new mean of the total steps per day is ``10821`` steps while the new median is ``11015`` steps. We can see that both averages have gone up since the NA values have gone from zero to a positive number.
+The new mean of the total steps per day is ``10821`` steps while the new median is ``11015`` steps. We can see that both averages have gone up since the *NA* values have gone from zero to some positive number.
 
 ## Are there differences in activity patterns between weekdays and weekends?
-1. Let's create the new “weekday” and “weekend” factor
+1. Create the new “weekday” and “weekend” factor
 
 ```r
 new_df$day <- weekdays(new_df$date)
@@ -167,14 +167,13 @@ new_df[!weekEnd, "day"] <- "weekday"
 new_df$day <- as.factor(new_df$day)
 ```
 
-2. Finally, we plot weekdays and weekends separately
+2. Finally, plot weekdays and weekends separately
 
 ```r
 grouped_df <- new_df %>%
     group_by(interval, day) %>%
     summarise(meanSteps = mean(steps))
-#meanSteps <- with(new_df, tapply(steps, interval, mean, na.rm = TRUE))
-#intervals <- as.integer(dimnames(meanSteps)[[1]])
+
 qplot(interval, meanSteps, data = grouped_df, geom="line", facets = day~., xlab = "Interval", ylab = "Number of steps")
 ```
 
@@ -182,3 +181,4 @@ qplot(interval, meanSteps, data = grouped_df, geom="line", facets = day~., xlab 
 
 Notice the differences in the spikes and their severity. It looks like on weekdays, the subject moves a lot around the 800-900 intervals but then stays mostly sedentary (perhaps going to work). However, on the weekends the subject's walks are shorter but more frequent.
 
+<br />
