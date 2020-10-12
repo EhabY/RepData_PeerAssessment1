@@ -33,7 +33,7 @@ sums[1:5]
 ```
 
 2. Let's plot the histogram of the number of steps per day.
-```{r fig.align="center"}
+```{r histogram1, fig.align="center"}
 library(ggplot2)
 qplot(sums, bins = 15, col = I("black"), fill = I("gray"), xlab = "Steps per Day", ylab = "Frequency")
 ```
@@ -52,7 +52,7 @@ The mean of the total steps per day is ```r format(round(totStepsMean))``` steps
 
 ## What is the average daily activity pattern?
 Let's now investigate the steps per interval, instead of per day.
-```{r fig.align="center"}
+```{r timeSeries1, fig.align="center"}
 meanSteps <- with(df, tapply(steps, interval, mean, na.rm = TRUE))
 intervals <- as.integer(dimnames(meanSteps)[[1]])
 qplot(intervals, meanSteps, geom="line", xlab = "Interval", ylab = "Number of steps")
@@ -99,7 +99,7 @@ head(new_df)
 ```
 
 4. Finally let's plot the new histogram and calculate the new mean and median
-```{r fig.align="center"}
+```{r histogram2, fig.align="center"}
 new_sums <- with(new_df, tapply(steps, date, sum))
 new_totStepsMean <- mean(new_sums)
 new_totStepsMedian <- median(new_sums)
@@ -120,7 +120,7 @@ new_df$day <- as.factor(new_df$day)
 ```
 
 2. Finally, we plot weekdays and weekends separately
-```{r fig.align="center", message=FALSE}
+```{r timeSeries2, fig.align="center", message=FALSE}
 grouped_df <- new_df %>%
     group_by(interval, day) %>%
     summarise(meanSteps = mean(steps))

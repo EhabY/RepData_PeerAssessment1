@@ -58,7 +58,7 @@ library(ggplot2)
 qplot(sums, bins = 15, col = I("black"), fill = I("gray"), xlab = "Steps per Day", ylab = "Frequency")
 ```
 
-<img src="PA1_template_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+<img src="PA1_template_files/figure-html/histogram1-1.png" style="display: block; margin: auto;" />
 
 We can see that there were a lot of days were the subject walked 10K-12K steps. Also, notice that there are a high number of zeros, a lot of this is because the data was missing (NA).
 
@@ -82,7 +82,7 @@ intervals <- as.integer(dimnames(meanSteps)[[1]])
 qplot(intervals, meanSteps, geom="line", xlab = "Interval", ylab = "Number of steps")
 ```
 
-<img src="PA1_template_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
+<img src="PA1_template_files/figure-html/timeSeries1-1.png" style="display: block; margin: auto;" />
 
 By using the already defined arrays **meanSteps** and **intervals** we can find the maximum number of steps and the interval that it happens in.
 
@@ -151,7 +151,7 @@ new_totStepsMedian <- median(new_sums)
 qplot(new_sums, bins = 15, col = I("black"), fill = I("gray"), xlab = "Steps per Day", ylab = "Frequency")
 ```
 
-<img src="PA1_template_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
+<img src="PA1_template_files/figure-html/histogram2-1.png" style="display: block; margin: auto;" />
 Looks like most of the zero values are now distributed to the rest of the histogram, especially in the 10K-12K region.
 
 The new mean of the total steps per day is ``10821`` steps while the new median is ``11015`` steps. We can see that both averages have gone up since the NA values have gone from zero to a positive number.
@@ -178,7 +178,7 @@ grouped_df <- new_df %>%
 qplot(interval, meanSteps, data = grouped_df, geom="line", facets = day~., xlab = "Interval", ylab = "Number of steps")
 ```
 
-<img src="PA1_template_files/figure-html/unnamed-chunk-13-1.png" style="display: block; margin: auto;" />
+<img src="PA1_template_files/figure-html/timeSeries2-1.png" style="display: block; margin: auto;" />
 
 Notice the differences in the spikes and their severity. It looks like on weekdays, the subject moves a lot around the 800-900 intervals but then stays mostly sedentary (perhaps going to work). However, on the weekends the subject's walks are shorter but more frequent.
 
