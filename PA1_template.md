@@ -173,13 +173,6 @@ new_df$day <- as.factor(new_df$day)
 grouped_df <- new_df %>%
     group_by(interval, day) %>%
     summarise(meanSteps = mean(steps))
-```
-
-```
-## `summarise()` regrouping output by 'interval' (override with `.groups` argument)
-```
-
-```r
 #meanSteps <- with(new_df, tapply(steps, interval, mean, na.rm = TRUE))
 #intervals <- as.integer(dimnames(meanSteps)[[1]])
 qplot(interval, meanSteps, data = grouped_df, geom="line", facets = day~., xlab = "Interval", ylab = "Number of steps")
